@@ -263,10 +263,10 @@ This endpoint retrieves all companies that are below an organization in the heir
 
 `GET https://lets.goboost.io/api/core/organizations/:id/companies`
 
-## Organization's users
+## Organization's Users & User Roles
 
 ```shell
-curl "https://lets.goboost.io/api/core/organizations/:id/users"
+curl "https://lets.goboost.io/api/core/organizations/:id/user_roles"
   -H "Content-Type: application/json" \
   -H "Authorization: xxx"
   -H "current-user-role-id: 1" \
@@ -277,11 +277,52 @@ curl "https://lets.goboost.io/api/core/organizations/:id/users"
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "count": 1,
+  "status": 200,
+  "user_roles": [
+    {
+      "id": 1,
+      "role_abilities": "ABILITY,ABILITY",
+      "role_description": "role description",
+      "role_id": 1,
+      "role_name": "Application Editor",
+      "role_type": "Organization",
+      "role_type_id": 1,
+      "role_type_name": "Demo Organization",
+      "user_email": "john@doe.com",
+      "user_first_name": "John",
+      "user_id": 1,
+      "user_last_name": "Doe"
+    },
+    {
+      "id": 2,
+      "role_abilities": "ABILITY,ABILITY",
+      "role_description": "role description",
+      "role_id": 1,
+      "role_name": "Application Editor",
+      "role_type": "Organization",
+      "role_type_id": 1,
+      "role_type_name": "Demo Organization",
+      "user_email": "john@doe.com",
+      "user_first_name": "John",
+      "user_id": 1,
+      "user_last_name": "Doe"
+    }
+  ],
+  "users": [
+    {
+      "email": "john@doe.com",
+      "first_name": "John",
+      "last_name": "Doe",
+      "id": 1
+    },
+    {
+      "email": "jane@doe.com",
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "id": 1
+    }
+  ]
 }
 ```
 
@@ -289,7 +330,7 @@ This endpoint retrieves all users that are below an organization in the heirarch
 
 ### HTTP Request
 
-`GET https://lets.goboost.io/api/core/organizations/:id/users`
+`GET https://lets.goboost.io/api/core/organizations/:id/user_roles`
 
 
 # Companies
@@ -475,19 +516,30 @@ This endpoint retrieves sites specific data for a specific company
 ## Company Reviews Profile
 ```shell
 curl "https://lets.goboost.io/api/reviews/company_reviews_profiles/:id"
+  -H "Content-Type: application/json" \
   -H "Authorization: xxx"
+  -H "current-user-role-id: 1" \
+  -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
+  {
+    "profile": {
+      "company_id": 1,
+      "created_at": "05 Oct 2020",
+      "facebook_importer_last_completed_at": "05 Oct 2020",
+      "google_importer_last_completed_at": "05 Oct 2020",
+      "id": 1,
+      "is_first_import_notification_sent": 1,
+      "is_setup_complete": 1,
+      "review_request_default_message": "",
+      "review_trackers_importer_last_completed_at": "05 Oct 2020",
+      "updated_at": "05 Oct 2020"
+    },
+    "status": 200
+  }
 ```
 
 This endpoint retrieves reviews specific data for a specific company
@@ -495,6 +547,10 @@ This endpoint retrieves reviews specific data for a specific company
 ### HTTP Request
 
 `GET https://lets.goboost.io/api/reviews/company_reviews_profile/:id`
+
+<aside class="notice">
+  The user role you are using for this request MUST be a user role for the company you are looking for
+</aside>
 
 ## Company Ads Profile
 ```shell
@@ -506,11 +562,21 @@ curl "https://lets.goboost.io/api/ads/company_ads_profile/:id"
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "profile": {
+    "active_boosted_services_count": 1,
+    "adwords_account_id": "xxx",
+    "adwords_account_negatives_shared_set_id": "xxx",
+    "company_id": 1,
+    "company_short_name": "Demo Company",
+    "company_url_slug": "/slug",
+    "created_at": "05 Oct 20",
+    "facebook_page_url": "facebook.com",
+    "id": 1,
+    "is_setup_complete": 1,
+    "opportunity_count": 1,
+    "updated_at": "05 Oct 20"
+  },
+  "status": 200
 }
 ```
 
@@ -519,6 +585,10 @@ This endpoint retrieves ads specific data for a specific company
 ### HTTP Request
 
 `GET https://lets.goboost.io/api/ads/company_ads_profile/:id`
+
+<aside class="notice">
+  The user role you are using for this request MUST be a user role for the company you are looking for
+</aside>
 
 # Opportunities
 
