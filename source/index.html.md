@@ -5,48 +5,48 @@ language_tabs:
   - shell
 
 toc_footers:
-  - <a href='https://support.goboost.io' target="_blank">Contact us for Oauth credentials</a>
+  - <a href='http://support.goboost.io' target="_blank">Contact us for Oauth credentials</a>
 
 includes:
   - errors
 
-search: true
+search: false
 
 code_clipboard: true
 ---
 
 # Introduction
 
-Welcome to the GoBoost API! You can use this API to get access reporting data about your GoBoost account.
+Welcome to the GoBoost API! You can use this API to get access to reporting data about your GoBoost account.
 
 # Terminology
-Heirarchy - The GoBoost app is setup with a family type heirarchy. There are Organizations, Companies, Users, and User Roles.
+**Hierarchy -** The GoBoost app is set up with a family type hierarchy. There are Organizations, Companies, Users, and User Roles.
 
-Organization - An organization represents a partner business that refers small businesses to use GoBoost. Organizations can be setup in a heirarchy of their own, meaning an organization can be a child of another organization. Examples of popular heirarchies: Manufacturer -> Distributor -> Small Business or Manufacturer -> Small Business. Users who are tied to an organization are able to see all "descendents" of that organization. So if you have a role at an organization that has organizations below it and companies below that, you'd be able to see everything about all companies tied to all organizations below you in the heirarchy.
+**Organization -** An Organization represents a partner business that refers small businesses to use GoBoost. Organizations can be setup in a hierarchy of their own, meaning an Organization can be a child of another organization. Examples of popular hierarchies: Manufacturer -> Distributor -> Small Business or Manufacturer -> Small Business. Users who are tied to an Organization are able to see all "descendents" of that Organization. If you have a role at an Organization that has Organizations below it and Companies below that, you'd be able to see everything about all Companies tied to all Organizations below you in the hierarchy.
 
-Company - A company represents a business that GoBoost is using our products. Companies must belong to at least one organization above it in the heirarchy.
+**Company -** A Company represents a business that is using GoBoost products. Companies must belong to at least one Organization above it in the hierarchy.
 
-Users - Users represent the actual people that are using the GoBoost system. User's are tied to organizations and/or companies and the role is what controls their access level.
+**Users -** Users represent the actual people that are using the GoBoost system. User's are tied to Organizations and/or Companies and the role is what controls their access level.
 
-User Roles - User roles are used to tie a user to either an organization or a company or both. The role that's chosen when you Authenticate into the API controls the level at which you'll be seeing data.
+**User Roles -** User Roles are used to tie a user to either an Organization or a Company or both. The role that's chosen when you authenticate into the API controls the level at which you'll be seeing data.
 
 # Authentication
 
 ## Flow
-GoBoost uses the oauth 2.0 protocol for Authentication.<br /><br />
+GoBoost uses the Oauth 2.0 protocol for Authentication.<br /><br />
 Oauth Flow:<br />
-1. POST to get a grant code and the list of user roles you have access to using your Base64 encoded login credentials and the Oauth App Client ID.<br />
+1. POST to get a grant code and the list of User Roles you have access to using your Base64 encoded login credentials and the Oauth app Client ID.<br />
 2. POST the grant code you received from the previous step to the token route and you'll get a access token, refresh token, expires in seconds, and a status back.<br />
 3. Use the access token as a bearer token in the Authorization header of each request you make to the GoBoost API.
 
 
 ## Grant Code
 
-The first step in the authentication process is to get a Grant code. To do this you will pass your Base64 encoded email and password login credentials and the auth route.
+The first step in the authentication process is to get a Grant Code. To do this you will pass your Base64 encoded email and password login credentials and the auth route.
 
-This will return the grant code, along with a list of the user roles that this user has access to.
+This will return the Grant Code, along with a list of the User Roles that this user has access to.
 
-You'll need to select the role you want to authenticate and use the grant code you received to get an access token.
+You'll need to select the role you want to authenticate and use the Grant Code you received to get an access token.
 
 ```shell
 # With shell, you can just pass the correct header with each request
@@ -86,11 +86,11 @@ curl -X POST "https://lets.goboost.io/api/core/oauth/auth" \
   You must replace <code>email:password</code> with your Base64 encoded login credentials and <code>ClientID</code> from the Oauth Application.
 </aside>
 
-## Access Token
+## access token
 
-Once you have selected your role and received the grant code, you'll need to use that grant code to trade in for an Access token.
+Once you have selected your role and received the grant code, you'll need to use that grant code to trade in for an access token.
 
-In order to do that you'll send a POST request to the token route along with your Oauth Application's Client Secret.
+In order to do that, you'll send a POST request to the token route along with your Oauth Application's Client Secret.
 
 This will return an access token, refresh token, and the expires at date/time
 
@@ -114,11 +114,11 @@ curl -X POST "https://lets.goboost.io/api/core/oauth/token" \
 ```
 
 <aside class="notice">
-  You must replace <code>code</code> with the grant code you received fro mthe previous step and replace <code>client_secret</code> from the Oauth Application.
+  You must replace <code>code</code> with the grant code you received from the previous step and replace <code>client_secret</code> from the Oauth Application.
 </aside>
 
 ## Refresh Token
-The access token you receive will expire. When the token expires you'll need to use the refresh token you received in the Access Token step to get a new Access token
+The access token you receive will expire. When the token expires, you'll need to use the refresh token you received in the access token step to get a new access token
 
 ```shell
 # With shell, you can just pass the correct header with each request
@@ -127,7 +127,7 @@ curl -X POST "https://lets.goboost.io/api/core/oauth/auth" \
 -d '{ "refresh_token": "xxx", "client_secret": "xxx", "grant_type": "refresh_token" }'
 ```
 
-> You must replace `refresh_token` with the refresh you received from the Access Token step and `client_secret` with your Oauth Application's Client Secret.
+> You must replace `refresh_token` with the refresh you received from the access token step and `client_secret` with your Oauth Application's Client Secret.
 
 > Successful Response:
 
@@ -140,11 +140,11 @@ curl -X POST "https://lets.goboost.io/api/core/oauth/auth" \
 ```
 
 <aside class="notice">
-  You must replace <code>refresh_token</code> with the refresh you received from the Access Token step and <code>client_secret</code> with your Oauth Application's Client Secret.
+  You must replace <code>refresh_token</code> with the refresh you received from the access token step and <code>client_secret</code> with your Oauth Application's Client Secret.
 </aside>
 
 ## Making Requests
-Now that you have an Access Token in order to make requests to GoBoost routes you'll need to add that token as an authorization header to each request. You'll also need to add GoBoost specific headers for the user role that you have selected. You can choose the user role from the list of user roles provided in the grant code request in the first step of the oauth process.
+Now that you have an access token, in order to make requests to GoBoost routes you'll need to add that token as an authorization header to each request. You'll also need to add GoBoost specific headers for the User Role that you have selected. You can choose the User Role from the list of User Roles provided in the grant code request in the first step of the Oauth process.
 
 ```shell
   curl "https://lets.goboost.io/api/(route)" \
@@ -154,10 +154,10 @@ Now that you have an Access Token in order to make requests to GoBoost routes yo
     -H "true-user-role-id: 1",
 ```
 
-> Replace `xxx` with the Access Token
+> Replace `xxx` with the access token
 
 <aside class="notice">
-  Replace <code>xxx</code> with the Access Token.
+  Replace <code>xxx</code> with the access token.
 </aside>
 
 # Organizations
@@ -257,7 +257,7 @@ This endpoint retrieves a specific organization
 }
 ```
 
-This endpoint retrieves all companies that are below an organization in the heirarchy.
+This endpoint retrieves all companies that are below an Organization in the hierarchy.
 
 ### HTTP Request
 
@@ -326,7 +326,7 @@ This endpoint retrieves all companies that are below an organization in the heir
 }
 ```
 
-This endpoint retrieves all users that are below an organization in the heirarchy.
+This endpoint retrieves all users that are below an Organization in the hierarchy.
 
 ### HTTP Request
 
@@ -379,7 +379,7 @@ This endpoint retrieves all users that are below an organization in the heirarch
 }
 ```
 
-This endpoint retrieves a specific company.
+This endpoint retrieves a specific Company.
 
 ### HTTP Request
 
@@ -419,7 +419,7 @@ This endpoint retrieves a specific company.
 }
 ```
 
-This endpoint retrieves all active subscriptions for a company.
+This endpoint retrieves all active subscriptions for a Company.
 
 ### HTTP Request
 
@@ -467,7 +467,7 @@ This endpoint retrieves all active subscriptions for a company.
 }
 ```
 
-This endpoint retrieves all available plans for a company.
+This endpoint retrieves all available plans for a Company.
 
 ### HTTP Request
 
@@ -549,7 +549,7 @@ This endpoint retrieves reviews specific data for a specific company
 `GET https://lets.goboost.io/api/reviews/company_reviews_profile/:id`
 
 <aside class="notice">
-  The user role you are using for this request MUST be a user role for the company you are looking for
+  The User Role you are using for this request MUST be a User Role for the Company you are looking for
 </aside>
 
 ## Company Ads Profile
@@ -583,14 +583,14 @@ This endpoint retrieves reviews specific data for a specific company
 }
 ```
 
-This endpoint retrieves ads specific data for a specific company
+This endpoint retrieves ads specific data for a specific Company.
 
 ### HTTP Request
 
 `GET https://lets.goboost.io/api/ads/company_ads_profile/:id`
 
 <aside class="notice">
-  The user role you are using for this request MUST be a user role for the company you are looking for
+  The User Role you are using for this request MUST be a User Role for the Company you are looking for
 </aside>
 
 # Opportunities
@@ -733,11 +733,11 @@ This endpoint retrieves ads specific data for a specific company
 
 Parameter | Default | Description
 --------- | ------- | -----------
-channel_ids | [] | If channel IDs are present it will only return opportunities belonging to those channels. Channels are: Google Ads, Facebook Ads, Site
-start_date | null | If a date is given it will return all opportunities from the start date on (inclusive). Format: ''
-company_ids | [] | If company IDs are present it will only return opportunities belonging to those companies.
-opportunity_types | [] | If opportunity types are present it will filter for only opportunities of that type. Types: call or form.
-limit | null | If limit is set it will limit the number of returned results. Default is to return all.
+channel_ids | [] | If channel IDs are present, it will only return opportunities belonging to those channels. Channels are: Google Ads, Facebook Ads, Site
+start_date | null | If a date is given, it will return all opportunities from the start date on (inclusive). Format: ''
+company_ids | [] | If Company IDs are present, it will only return opportunities belonging to those companies.
+opportunity_types | [] | If opportunity types are present, it will filter for only opportunities of that type. Types: call or form.
+limit | null | If limit is set, it will limit the number of returned results. Default is to return all.
 page | null | If a page is set, in combination with limit, it will return paginated results.
 
 This endpoint retrieves opportunities that belong to the organization's companies.
@@ -883,10 +883,10 @@ This endpoint retrieves opportunities that belong to the comapny
 
 Parameter | Default | Description
 --------- | ------- | -----------
-channel_ids | [] | If channel IDs are present it will only return opportunities belonging to those channels. Channels are: Google Ads, Facebook Ads, Site
-start_date | null | If a date is given it will return all opportunities from the start date on (inclusive). Format: ''
-opportunity_types | [] | If opportunity types are present it will filter for only opportunities of that type. Types: call or form.
-limit | null | If limit is set it will limit the number of returned results. Default is to return all.
+channel_ids | [] | If channel IDs are present, it will only return opportunities belonging to those channels. Channels are: Google Ads, Facebook Ads, Site
+start_date | null | If a date is given, it will return all opportunities from the start date on (inclusive). Format: ''
+opportunity_types | [] | If opportunity types are present, it will filter for only opportunities of that type. Types: call or form.
+limit | null | If limit is set, it will limit the number of returned results. Default is to return all.
 page | null | If a page is set, in combination with limit, it will return paginated results.
 ### HTTP Request
 
@@ -911,7 +911,7 @@ page | null | If a page is set, in combination with limit, it will return pagina
       "author": "Jane Doe",
       "company_id": 5,
       "company_name": "Demo Company",
-      "content": "Demo Company is the best company I've ever worked with",
+      "content": "Demo Company is the best Company I've ever worked with",
       "created_at": "02 Oct 2020",
       "id": 1,
       "importer_api_response": {},
@@ -936,7 +936,7 @@ page | null | If a page is set, in combination with limit, it will return pagina
       "author": "Jane Doe",
       "company_id": 5,
       "company_name": "Demo Company",
-      "content": "Demo Company is the best company I've ever worked with",
+      "content": "Demo Company is the best Company I've ever worked with",
       "created_at": "02 Oct 2020",
       "id": 1,
       "importer_api_response": {},
@@ -964,10 +964,10 @@ page | null | If a page is set, in combination with limit, it will return pagina
 
 Parameter | Default | Description
 --------- | ------- | -----------
-review_source_id | [] | If a review_source_id is returned it will only return reviews belonging to that review source. Review sources are all the review sites we retrieve reviews from.
-start_date | null | If a date is given it will return all opportunities from the start date on (inclusive). Format: ''
-company_ids | [] | If company IDs are present it will only return opportunities belonging to those companies.
-limit | null | If limit is set it will limit the number of returned results. Default is to return all.
+review_source_id | [] | If a review_source_id is set, it will only return reviews belonging to that review source. Review sources are all the review sites we retrieve reviews from.
+start_date | null | If a date is given, it will return all opportunities from the start date on (inclusive). Format: ''
+company_ids | [] | If Company IDs are present, it will only return opportunities belonging to those companies.
+limit | null | If limit is set, it will limit the number of returned results. Default is to return all.
 page | null | If a page is set, in combination with limit, it will return paginated results.
 
 ### HTTP Request
@@ -992,7 +992,7 @@ page | null | If a page is set, in combination with limit, it will return pagina
       "author": "Jane Doe",
       "company_id": 5,
       "company_name": "Demo Company",
-      "content": "Demo Company is the best company I've ever worked with",
+      "content": "Demo Company is the best Company I've ever worked with",
       "created_at": "02 Oct 2020",
       "id": 1,
       "importer_api_response": {},
@@ -1017,7 +1017,7 @@ page | null | If a page is set, in combination with limit, it will return pagina
       "author": "Jane Doe",
       "company_id": 5,
       "company_name": "Demo Company",
-      "content": "Demo Company is the best company I've ever worked with",
+      "content": "Demo Company is the best Company I've ever worked with",
       "created_at": "02 Oct 2020",
       "id": 1,
       "importer_api_response": {},
@@ -1045,9 +1045,9 @@ page | null | If a page is set, in combination with limit, it will return pagina
 
 Parameter | Default | Description
 --------- | ------- | -----------
-review_source_id | [] | If a review_source_id is returned it will only return reviews belonging to that review source. Review sources are all the review sites we retrieve reviews from.
-start_date | null | If a date is given it will return all opportunities from the start date on (inclusive). Format: ''
-limit | null | If limit is set it will limit the number of returned results. Default is to return all.
+review_source_id | [] | If a review_source_id is set, it will only return reviews belonging to that review source. Review sources are all the review sites we retrieve reviews from.
+start_date | null | If a date is given, it will return all opportunities from the start date on (inclusive). Format: ''
+limit | null | If limit is set, it will limit the number of returned results. Default is to return all.
 page | null | If a page is set, in combination with limit, it will return paginated results.
 
 ### HTTP Request
