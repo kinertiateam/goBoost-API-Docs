@@ -148,10 +148,10 @@ Now that you have an Access Token in order to make requests to GoBoost routes yo
 
 ```shell
   curl "https://lets.goboost.io/api/(route)" \
-  -H "Content-Type: application/json" \
-  -H "Authorization: 'Bearer xxx" \
-  -H "current-user-role-id: 1" \
-  -H "true-user-role-id: 1",
+    -H "Content-Type: application/json" \
+    -H "Authorization: 'Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1",
 ```
 
 > Replace `xxx` with the Access Token
@@ -165,11 +165,11 @@ Now that you have an Access Token in order to make requests to GoBoost routes yo
 ## Specific Organization
 
 ```shell
-curl "https://lets.goboost.io/api/core/organizations/:id"
-  -H "Content-Type: application/json" \
-  -H "Authorization: xxx"
-  -H "current-user-role-id: 1" \
-  -H "true-user-role-id: 1"
+  curl "https://lets.goboost.io/api/core/organizations/:id"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
@@ -204,11 +204,11 @@ This endpoint retrieves a specific organization
 ## Organization's Companies
 
 ```shell
-curl "https://lets.goboost.io/api/core/organizations/:id/companies"
-  -H "Content-Type: application/json" \
-  -H "Authorization: xxx"
-  -H "current-user-role-id: 1" \
-  -H "true-user-role-id: 1"
+  curl "https://lets.goboost.io/api/core/organizations/:id/companies"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
@@ -266,11 +266,11 @@ This endpoint retrieves all companies that are below an organization in the heir
 ## Organization's Users & User Roles
 
 ```shell
-curl "https://lets.goboost.io/api/core/organizations/:id/user_roles"
-  -H "Content-Type: application/json" \
-  -H "Authorization: xxx"
-  -H "current-user-role-id: 1" \
-  -H "true-user-role-id: 1"
+  curl "https://lets.goboost.io/api/core/organizations/:id/user_roles"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
@@ -336,11 +336,11 @@ This endpoint retrieves all users that are below an organization in the heirarch
 # Companies
 ## Company
 ```shell
-curl "https://lets.goboost.io/api/core/companies/:id"
-  -H "Content-Type: application/json" \
-  -H "Authorization: xxx"
-  -H "current-user-role-id: 1" \
-  -H "true-user-role-id: 1"
+  curl "https://lets.goboost.io/api/core/companies/:id"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
@@ -387,11 +387,11 @@ This endpoint retrieves a specific company.
 
 ## Company Subscriptions
 ```shell
-curl "https://lets.goboost.io/api/core/companies/:id/subscription"
-  -H "Content-Type: application/json" \
-  -H "Authorization: xxx"
-  -H "current-user-role-id: 1" \
-  -H "true-user-role-id: 1"
+  curl "https://lets.goboost.io/api/core/companies/:id/subscription"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
@@ -427,11 +427,11 @@ This endpoint retrieves all active subscriptions for a company.
 
 ## Company Plans
 ```shell
-curl "https://lets.goboost.io/api/core/companies/:id/plans"
-  -H "Content-Type: application/json" \
-  -H "Authorization: xxx"
-  -H "current-user-role-id: 1" \
-  -H "true-user-role-id: 1"
+  curl "https://lets.goboost.io/api/core/companies/:id/plans"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
@@ -475,11 +475,11 @@ This endpoint retrieves all available plans for a company.
 
 ## Company Sites Profile
 ```shell
-curl "https://lets.goboost.io/api/sites/company_sites_profiles/:id"
-  -H "Content-Type: application/json" \
-  -H "Authorization: xxx"
-  -H "current-user-role-id: 1" \
-  -H "true-user-role-id: 1"
+  curl "https://lets.goboost.io/api/sites/company_sites_profiles/:id"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
@@ -515,11 +515,11 @@ This endpoint retrieves sites specific data for a specific company
 
 ## Company Reviews Profile
 ```shell
-curl "https://lets.goboost.io/api/reviews/company_reviews_profiles/:id"
-  -H "Content-Type: application/json" \
-  -H "Authorization: xxx"
-  -H "current-user-role-id: 1" \
-  -H "true-user-role-id: 1"
+  curl "https://lets.goboost.io/api/reviews/company_reviews_profiles/:id"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
@@ -554,8 +554,11 @@ This endpoint retrieves reviews specific data for a specific company
 
 ## Company Ads Profile
 ```shell
-curl "https://lets.goboost.io/api/ads/company_ads_profile/:id"
-  -H "Authorization: xxx"
+  curl "https://lets.goboost.io/api/ads/company_ads_profile/:id"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
@@ -594,8 +597,11 @@ This endpoint retrieves ads specific data for a specific company
 
 ## Organization's Opportunities
 ```shell
-curl "https://lets.goboost.io/api/core/opportunities/organizations/:id"
-  -H "Authorization: xxx"
+  curl "https://lets.goboost.io/api/core/opportunities/organizations/:id"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
@@ -742,8 +748,11 @@ This endpoint retrieves opportunities that belong to the organization's companie
 
 ## Company's Opportunities
 ```shell
-curl "https://lets.goboost.io/api/core/opportunities/companies/:id"
-  -H "Authorization: xxx"
+  curl "https://lets.goboost.io/api/core/opportunities/companies/:id"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
@@ -886,11 +895,11 @@ page | null | If a page is set, in combination with limit, it will return pagina
 # Reviews
 ## Organization's Reviews
 ```shell
-curl "https://lets.goboost.io/api/reviews/organizations/:id"
-  -H "Content-Type: application/json" \
-  -H "Authorization: xxx"
-  -H "current-user-role-id: 1" \
-  -H "true-user-role-id: 1"
+  curl "https://lets.goboost.io/api/reviews/organizations/:id"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
@@ -967,11 +976,11 @@ page | null | If a page is set, in combination with limit, it will return pagina
 
 ## Company's Reviews
 ```shell
-curl "https://lets.goboost.io/api/reviews/companies/:id"
-  -H "Content-Type: application/json" \
-  -H "Authorization: xxx"
-  -H "current-user-role-id: 1" \
-  -H "true-user-role-id: 1"
+  curl "https://lets.goboost.io/api/reviews/companies/:id"
+    -H "Content-Type: application/json" \
+    -H "Authorization: xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
 ```
 
 > The above command returns JSON structured like this:
