@@ -86,7 +86,7 @@ curl -X POST "https://lets.goboost.io/api/core/oauth/auth" \
   You must replace <code>email:password</code> with your Base64 encoded login credentials and <code>ClientID</code> from the Oauth Application.
 </aside>
 
-## access token
+## Access Token
 
 Once you have selected your role and received the grant code, you'll need to use that grant code to trade in for an access token.
 
