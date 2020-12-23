@@ -122,7 +122,7 @@ The access token you receive will expire. When the token expires, you'll need to
 
 ```shell
 # With shell, you can just pass the correct header with each request
-curl -X POST "https://lets.goboost.io/api/core/oauth/auth" \
+curl -X POST "https://lets.goboost.io/api/core/oauth/token" \
 -H "Content-Type: application/json" \
 -d '{ "refresh_token": "xxx", "client_secret": "xxx", "grant_type": "refresh_token" }'
 ```
@@ -149,7 +149,7 @@ Now that you have an access token, in order to make requests to GoBoost routes y
 ```shell
   curl "https://lets.goboost.io/api/(route)" \
     -H "Content-Type: application/json" \
-    -H "Authorization: 'Bearer xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1",
 ```
@@ -160,6 +160,241 @@ Now that you have an access token, in order to make requests to GoBoost routes y
   Replace <code>xxx</code> with the access token.
 </aside>
 
+# Roles
+
+## Roles
+```shell
+  curl "https://lets.goboost.io/api/core/roles"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "roles": [
+    {
+      "abilities": "ABILITY,ABILITY,ABILITY"
+      "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+      "created_by_user_id": 1,
+      "description": "Role Description",
+      "id": 1,
+      "name": "Role Name",
+      "role_type": "Company or Organization",
+      "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+    },
+    {
+      "abilities": "ABILITY,ABILITY,ABILITY"
+      "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+      "created_by_user_id": 1,
+      "description": "Role Description",
+      "id": 1,
+      "name": "Role Name",
+      "role_type": "Company or Organization",
+      "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+    }
+  ],
+  "status": 200
+}
+```
+
+This endpoint retrieves data about the roles that are available.
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/roles`
+
+# Users
+
+## User Search
+```shell
+  curl "https://lets.goboost.io/api/core/users/search"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+Parameter | Description
+--------- | -----------
+email | Search for the user in GoBoost by email.
+first_name | Search for the user in GoBoost by first name.
+last_name | Search for the user in GoBoost by last name.
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "status": 200,
+  "user": {
+    "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+    "email": "john@doe.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+  }
+}
+```
+
+This endpoint retrieves data about the roles that are available.
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/users/search`
+
+
+## Create User
+
+```shell
+  curl -X POST "https://lets.goboost.io/api/core/users"
+    -d '{ "email": "john@doe.com", "first_name": "John", "last_name": "Doe" }' \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### HTTP Request
+
+`POST https://lets.goboost.io/api/core/users`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "status": 200,
+  "user": {
+    "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+    "email": "john@doe.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+  }
+}
+```
+
+## User's User Roles
+```shell
+  curl "https://lets.goboost.io/api/core/users/:id/user_roles"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "status": 200,
+  "user_roles": [
+    {
+      "id": 1,
+      "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+      "user_id": 1,
+      "role_id": 1,
+      "role_type": "Company",
+      "role_type_id": 1,
+      "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+    },
+    {
+      "id": 2,
+      "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+      "user_id": 1,
+      "role_id": 1,
+      "role_type": "Company",
+      "role_type_id": 2,
+      "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+    }
+  ]
+}
+```
+
+This endpoint retrieves data about the roles that are available to the specified user.
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/users/:id/user_roles`
+
+
+## Current User's User Roles
+```shell
+  curl "https://lets.goboost.io/api/core/user_roles"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "status": 200,
+  "user_roles": [
+    {
+      "id": 1,
+      "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+      "user_id": 1,
+      "role_id": 1,
+      "role_type": "Company",
+      "role_type_id": 1,
+      "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+    },
+    {
+      "id": 2,
+      "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+      "user_id": 1,
+      "role_id": 1,
+      "role_type": "Company",
+      "role_type_id": 2,
+      "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+    }
+  ]
+}
+```
+
+This endpoint retrieves data about the roles that are available to the current user.
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/users/:id/user_roles`
+
+## Create User Role
+
+```shell
+  curl -X POST "https://lets.goboost.io/api/core/user_roles"
+    -d '{ "role_id": 1, "role_type": "Company", user_id: 1, role_type_id: 1 }' \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### HTTP Request
+
+`POST https://lets.goboost.io/api/core/user_roles`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "status": 200,
+  "user_role": {
+    "id": 1,
+    "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+    "user_id": 1,
+    "role_id": 1,
+    "role_type": "Company",
+    "role_type_id": 1,
+    "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+  }
+}
+```
+
 # Organizations
 
 ## Specific Organization
@@ -167,7 +402,7 @@ Now that you have an access token, in order to make requests to GoBoost routes y
 ```shell
   curl "https://lets.goboost.io/api/core/organizations/:id"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -206,7 +441,7 @@ This endpoint retrieves a specific organization
 ```shell
   curl "https://lets.goboost.io/api/core/organizations/:id/companies"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -268,7 +503,7 @@ This endpoint retrieves all companies that are below an Organization in the hier
 ```shell
   curl "https://lets.goboost.io/api/core/organizations/:id/user_roles"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -333,12 +568,362 @@ This endpoint retrieves all users that are below an Organization in the hierarch
 `GET https://lets.goboost.io/api/core/organizations/:id/user_roles`
 
 
+## External Data
+
+```shell
+  curl "https://lets.goboost.io/api/core/organization_external_data"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+### Query Parameters
+
+Parameter | Description
+--------- | -----------
+owner_organization_id | The GoBoost ID for the organization that owns the data. Typically this is tied to the "brand" level organization. This is required.
+external_id | The ID you use to identify the organization in your database. This allows you to query this route using your ID in order to get the GoBoost ID.
+role_type | This is the type of entity you are looking for. Either a Company or Organization.
+role_type_id | This is the GoBoost ID of the Company or Organization
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/organization_external_data`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "organization_external_data": [
+    {
+      "created_at": "05 Oct 2020",
+      "external_data": {},
+      "external_id": "xxx-xx1",
+      "id": 3,
+      "owner_organization_id": 2,
+      "role_type": "Organization",
+      "role_type_id": 1,
+      "updated_at": "05 Oct 2020",
+    },
+    {
+      "created_at": "05 Oct 2020",
+      "external_data": {},
+      "external_id": "xxx-xx2",
+      "id": 4,
+      "owner_organization_id": 2,
+      "role_type": "Organization",
+      "role_type_id": 1,
+      "updated_at": "05 Oct 2020",
+    }
+  ],
+  "status": 200
+}
+```
+
+## Organization External IDs
+
+```shell
+  curl "https://lets.goboost.io/api/core/organization_external_data/organizations/:organization_id/external_ids?external_ids[]=1,2,3"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### Query Parameters
+
+Parameter | Description
+--------- | -----------
+external_ids | These are the ID's from your database that we store in our system so you can easily match up your data to ours. You can request up to 1,000 external ID's at a time. This is required.
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/organization_external_data/organizations/:organization_id/external_ids`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "organization_external_data": [
+    {
+      "owner_organization_id": 1,
+      "role_type": "Organization or Company",
+      "role_type_id": 1,
+      "external_id": "xxx",
+      "external_data": {
+        "key": "value"
+      },
+      "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+      "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+    },
+    {
+      "owner_organization_id": 1,
+      "role_type": "Organization or Company",
+      "role_type_id": 1,
+      "external_id": "xxx",
+      "external_data": {
+        "key": "value"
+      },
+      "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+      "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+    }
+  ],
+  "status": 200
+}
+```
+
+## Add External Data
+
+```shell
+  curl -X POST "https://lets.goboost.io/api/core/organization_external_data"
+    -d '{ "owner_organization_id": 1, "role_type": "Company", "role_type_id": 1, "external_id": "xxx", external_data: { "key": "value" } }' \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### HTTP Request
+
+`POST https://lets.goboost.io/api/core/organization_external_data`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "organization_external_data": {
+    "owner_organization_id": 1,
+    "role_type": "Organization or Company",
+    "role_type_id": 1,
+    "external_id": "xxx",
+    "external_data": {
+      "key": "value"
+    },
+    "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+    "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+  },
+  "status": 200
+}
+```
+
+## Organization Child Types
+
+```shell
+  curl "https://lets.goboost.io/api/core/organization_child_types"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/organization_child_types`
+
+> The above command returns JSON structured like this:
+
+```json
+  "organization_child_types": [
+    {
+      "id": 1,
+      "name": "Type",
+      "owner_organization_id": 1
+    },
+    {
+      "id": 2,
+      "name": "Type",
+      "owner_organization_id": 1
+    }
+  ]
+```
+## Associate Company to Organization
+
+```shell
+  curl -X PUT "https://lets.goboost.io/api/core/organization_child/organizations/:id"
+    -d '{ "organization_id": 1, "organization_child_type_id": 1 }' \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### HTTP Request
+
+`PUT https://lets.goboost.io/api/core/organization_child/organizations/:id`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "status": 200,
+  "organization_child": {
+    "id": 1,
+    "parent_organization_child_id": 1,
+    "child_organization": 1,
+    "child_organization_type_id: 1
+  }
+}
+```
+
+## Sign Up Codes
+```shell
+  curl "https://lets.goboost.io/api/core/sign_up_codes/organizations/:id"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "sign_up_codes": [
+    {
+      "code": "SIGNUPCODE",
+      "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+      "id": 1,
+      "owner_organization_id": 1,
+      "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+    },
+    {
+      "code": "SIGNUPCODE2",
+      "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+      "id": 2,
+      "owner_organization_id": 1,
+      "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+    },
+  ]
+}
+```
+
+This endpoint retrieves gives the sign up codes that are available to the specified organization.
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/sign_up_codes/organizations/:id`
+
+
+## Company Organizations
+
+```shell
+  curl "https://lets.goboost.io/api/core/company_organizations/:company_id"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/company_organizations/:company_id`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "organizations": [
+    {
+      "company_id": 1,
+      "name": "Organization Name",
+      "organization_id": 4
+    },
+    {
+      "company_id": 1,
+      "name": "Organization Name",
+      "organization_id": 4
+    }
+  ],
+  "status": 200
+}
+```
+
+## Create Company Organization Association
+
+```shell
+  curl -X POST "https://lets.goboost.io/api/core/company_organizations/:company_id"
+    -d '{ "organization_id": 1 }' \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### HTTP Request
+
+`POST https://lets.goboost.io/api/core/company_organizations/:company_id`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "status": 200,
+  "company_organization": {
+    "company_id": 1,
+    "organization_id": 1,
+    "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+    "updated_at": "Thu, 21 May 2020 16:04:31 GMT",
+  }
+}
+```
+## Delete Company Organization Association
+
+```shell
+  curl -X DELETE "https://lets.goboost.io/api/core/company_organizations/:company_id"
+    -d '{ "organization_id": 1 }' \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### HTTP Request
+
+`DELETE https://lets.goboost.io/api/core/company_organizations/:company_id`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "status": 200
+}
+```
+
+## Organization Host Theme
+
+```shell
+  curl "https://lets.goboost.io/api/core/host_themes/organizations/:id"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/host_themes/organizations/:id`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "host_theme": {
+    "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+    "hostname": "example.goboost.io",
+    "id": 1,
+    "owner_organization_id": 1,
+    "theme_id": 1,
+    "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+  },
+  "status": 200
+}
+```
+
 # Companies
 ## Company
 ```shell
   curl "https://lets.goboost.io/api/core/companies/:id"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -379,7 +964,7 @@ This endpoint retrieves all users that are below an Organization in the hierarch
 }
 ```
 
-This endpoint retrieves a specific Company.
+This endpoint retrieves a specific company.
 
 ### HTTP Request
 
@@ -389,7 +974,7 @@ This endpoint retrieves a specific Company.
 ```shell
   curl "https://lets.goboost.io/api/core/companies/:id/subscription"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -429,7 +1014,7 @@ This endpoint retrieves all active subscriptions for a Company.
 ```shell
   curl "https://lets.goboost.io/api/core/companies/:id/plans"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -477,7 +1062,7 @@ This endpoint retrieves all available plans for a Company.
 ```shell
   curl "https://lets.goboost.io/api/sites/company_sites_profiles/:id"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -517,7 +1102,7 @@ This endpoint retrieves sites specific data for a specific company
 ```shell
   curl "https://lets.goboost.io/api/reviews/company_reviews_profiles/:id"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -556,7 +1141,7 @@ This endpoint retrieves reviews specific data for a specific company
 ```shell
   curl "https://lets.goboost.io/api/ads/company_ads_profile/:id"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -593,13 +1178,224 @@ This endpoint retrieves ads specific data for a specific Company.
   The User Role you are using for this request MUST be a User Role for the Company you are looking for
 </aside>
 
+
+## External Data
+
+```shell
+  curl "https://lets.goboost.io/api/core/organization_external_data"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+### Query Parameters
+
+Parameter | Description
+--------- | -----------
+owner_organization_id | The GoBoost ID for the organization that owns the data. Typically this is tied to the "brand" level organization. This is required.
+external_id | The ID you use to identify the company in your database. This allows you to query this route using your ID in order to get the GoBoost ID.
+role_type | This is the type of entity you are looking for. Either a Company or Organization.
+role_type_id | This is the GoBoost ID of the Company or Organization
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/organization_external_data`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "organization_external_data": [
+    {
+      "created_at": "05 Oct 2020",
+      "external_data": {},
+      "external_id": "xxx-xx1",
+      "id": 3,
+      "owner_organization_id": 2,
+      "role_type": "Organization",
+      "role_type_id": 1,
+      "updated_at": "05 Oct 2020",
+    },
+    {
+      "created_at": "05 Oct 2020",
+      "external_data": {},
+      "external_id": "xxx-xx2",
+      "id": 4,
+      "owner_organization_id": 2,
+      "role_type": "Organization",
+      "role_type_id": 1,
+      "updated_at": "05 Oct 2020",
+    }
+  ],
+  "count": 2,
+  "status": 200
+}
+```
+
+## Company Roles
+
+```shell
+  curl "https://lets.goboost.io/api/core/companies/:id/roles"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/companies/:id/roles`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "roles": [
+    {
+      "abilities": "ABILITY,ABILITY",
+      "created_at": "05 Oct 2020",
+      "created_by_user_id": 1,
+      "description": "Short description of the role",
+      "id": 1,
+      "name": "Role Name",
+      "role_type": "Organization",
+      "updated_at": "05 Oct 2020"
+    },
+    {
+      "abilities": "ABILITY,ABILITY",
+      "created_at": "05 Oct 2020",
+      "created_by_user_id": 1,
+      "description": "Short description of the role",
+      "id": 2,
+      "name": "Role Name",
+      "role_type": "Company",
+      "updated_at": "05 Oct 2020"
+    },
+  ],
+  "status": 200
+}
+```
+
+## Company User Roles
+
+```shell
+  curl "https://lets.goboost.io/api/core/companies/:id/user_roles"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/core/companies/:id/user_roles`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "count": 2,
+  "status": 200,
+  "user_roles": [
+    {
+      "id": 1,
+      "role_abilities": "ABILITY,ABILITY",
+      "role_description": "Short description of the role",
+      "role_id": 4,
+      "role_name": "Role Name",
+      "role_type": "Organization",
+      "role_type_id": 5,
+      "role_type_name": "Organization's Name",
+      "user_email": "john@doe.com",
+      "user_first_name": "John",
+      "user_id": 6,
+      "user_last_name": "Doe"
+    },
+    {
+      "id": 2,
+      "role_abilities": "ABILITY,ABILITY",
+      "role_description": "Short description of the role",
+      "role_id": 4,
+      "role_name": "Role Name",
+      "role_type": "Company",
+      "role_type_id": 5,
+      "role_type_name": "Company's Name",
+      "user_email": "john@doe.com",
+      "user_first_name": "John",
+      "user_id": 6,
+      "user_last_name": "Doe"
+    }
+  ],
+  "status": 200
+}
+```
+
+## Sign A Company Up For GoBoost
+
+```shell
+  curl -X POST "https://lets.goboost.io/api/core/sign_up"
+    -d '{ "email": "john@doe.com", "google_place_id": "xxx", "code": "SIGNUPCODE", "hostname": "url.goboost.io", "token": "invite_token" } ' \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### HTTP Request
+
+`POST https://lets.goboost.io/api/core/sign_up`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "status": 200,
+  "message": "Welcome!",
+  "credentials": {
+    "auth_token": "xxx",
+    "user_id": 1
+  },
+  "company": {
+    "id": 1,
+    "coupon_code": "xxx",
+    "google_place_id": "xxxx",
+    "sign_up_code_id": 1,
+    "sign_up_organization_id": 1,
+    "name": "Company Name",
+    "address_line_one": "123 st.",
+    "address_line_two": "Suite 123",
+    "city": "City",
+    "state": "State",
+    "postal_code": "12345",
+    "country": "US",
+    "phone_number": "5555555555",
+    "primary_website": "www.domain.com",
+    "secondary_website": "",
+    "latitude": 1.0000,
+    "longitude": -1.0000,
+    "time_zone_id": "",
+    "service_area": {},
+    "business_hours": {}
+  },
+  "user": {
+    "id": 1,
+    "email": "john@doe.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+    "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+  }
+}
+
+```
+
 # Opportunities
 
 ## Organization's Opportunities
 ```shell
   curl "https://lets.goboost.io/api/core/opportunities/organizations/:id"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -750,7 +1546,7 @@ This endpoint retrieves opportunities that belong to the organization's companie
 ```shell
   curl "https://lets.goboost.io/api/core/opportunities/companies/:id"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -893,11 +1689,58 @@ page | null | If a page is set, in combination with limit, it will return pagina
 `GET https://lets.goboost.io/api/core/opportunities/companies/:id`
 
 # Reviews
+
+## Review Sources
+```shell
+  curl "https://lets.goboost.io/api/reviews/review_sources"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "status": 200,
+  "review_sources": [
+    {
+      "id": 1,
+      "name": "Google",
+      "short_name": "",
+      "api_source_id": "",
+      "code": "",
+      "icon": "https://storage.googleapis.com/link/to/icon.png",
+      "image": "https://storage.googleapis.com/link/to/image.png",
+      "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+      "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+    },
+    {
+      "id": 2,
+      "name": "Facebook",
+      "short_name": "",
+      "api_source_id": "",
+      "code": "",
+      "icon": "https://storage.googleapis.com/link/to/icon.png",
+      "image": "https://storage.googleapis.com/link/to/image.png",
+      "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+      "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+    }
+  ]
+}
+```
+### HTTP Request
+
+`GET https://lets.goboost.io/api/reviews/review_sources`
+
+
+
 ## Organization's Reviews
 ```shell
   curl "https://lets.goboost.io/api/reviews/organizations/:id"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -974,11 +1817,77 @@ page | null | If a page is set, in combination with limit, it will return pagina
 
 `GET https://lets.goboost.io/api/reviews/organizations/:id`
 
+## Organization Companies' Reviews
+```shell
+  curl "https://lets.goboost.io/api/reviews/organizations/:id/company_review_source_distribution"
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "company_review_source_distribution": [
+    {
+      "company_id": 1,
+      "count": 5,
+      "is_responded_to_sum": 1,
+      "latitude": 0.0000,
+      "longitude": -0.000,
+      "name": "GoBoost",
+      "r1": 0,
+      "r2": 0,
+      "r3": 0,
+      "r4": 0,
+      "r5": 5,
+      "rating_average": 5.0,
+      "review_site_url": "https://reviewsite.com/page",
+      "review_source_id": 1,
+      "review_source_name": "Google"
+    },
+    {
+      "company_id": 2,
+      "count": 5,
+      "is_responded_to_sum": 1,
+      "latitude": 0.0000,
+      "longitude": -0.000,
+      "name": "GoBoost",
+      "r1": 0,
+      "r2": 0,
+      "r3": 0,
+      "r4": 0,
+      "r5": 5,
+      "rating_average": 5.0,
+      "review_site_url": "https://reviewsite.com/page",
+      "review_source_id": 2,
+      "review_source_name": "Facebook"
+    }
+  ],
+  "count": 1,
+  "status": 200
+}
+```
+
+Parameter | Default | Description
+--------- | ------- | -----------
+company_ids | [] | If company ids are passed only data for those company ids will be returned.
+start_date | null | If a date is given, it will return all reviews from the start date on (inclusive). Format: ''
+review_source_id | 'all' | If a review source ID is sent with the request only reviews belonging to those review sources are returned.
+limit | null | If limit is set, it will limit the number of returned results. Default is 100 and max is 1,000.
+offset | null | If an offset is set it starts at that number.
+
+### HTTP Request
+
+`GET https://lets.goboost.io/api/reviews/companies/:id`
+
 ## Company's Reviews
 ```shell
   curl "https://lets.goboost.io/api/reviews/companies/:id"
     -H "Content-Type: application/json" \
-    -H "Authorization: xxx" \
+    -H "Authorization: Bearer xxx" \
     -H "current-user-role-id: 1" \
     -H "true-user-role-id: 1"
 ```
@@ -1053,3 +1962,75 @@ page | null | If a page is set, in combination with limit, it will return pagina
 ### HTTP Request
 
 `GET https://lets.goboost.io/api/reviews/companies/:id`
+
+## Create Company Review Site
+
+```shell
+  curl -X POST "https://lets.goboost.io/api/reviews/company_review_sites"
+    -d '{ "company_id": 1, "url": "https://review_site.com/page", "review_source_id": 1 }' \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: 1"
+```
+
+### HTTP Request
+
+`POST https://lets.goboost.io/api/reviews/company_review_sites`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "status": 200,
+  "company_review_site": {
+    "id": 1,
+    "created_at": "Thu, 21 May 2020 16:04:31 GMT",
+    "company_id": 1,
+    "review_source_id": 1,
+    "url": "https://review_site.com/page",
+    "review_trackers_url_id": "xxx",
+    "is_customer_shown": 1,
+    "updated_at": "Thu, 21 May 2020 16:04:31 GMT"
+  }
+}
+```
+
+## Create Review Request
+
+```shell
+  curl -X POST "https://lets.goboost.io/api/reviews/review_requests"
+    -d '{ "email": "jane@doe.com", "phone": "5555555555", "full_name": "Jane Doe" }' \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer xxx" \
+    -H "current-user-role-id: 1" \
+    -H "true-user-role-id: (company_user_role_id)"
+```
+
+### HTTP Request
+
+`POST https://lets.goboost.io/api/reviews/review_requests`
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "review_request": {
+    "id": 1,
+    "company_id": 1,
+    "current_user_id": 1,
+    "full_name": 1,
+    "email": "jane@doe.com",
+    "phone": "5555555555",
+    "message": "message to consumer",
+    "is_clicked": false,
+    "clicked_at": "",
+    "created_at": "",
+    "updated_at": "",
+    "reference_id": "xxx",
+    "true_user_role_id": 1,
+    "current_user_role_id": 1
+  },
+  "status": 200
+}
+```
