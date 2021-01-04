@@ -2003,8 +2003,8 @@ page | null | If a page is set, in combination with limit, it will return pagina
     -d '{ "email": "jane@doe.com", "phone": "5555555555", "full_name": "Jane Doe" }' \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer xxx" \
-    -H "current-user-role-id: 1" \
-    -H "true-user-role-id: (company_user_role_id)"
+    -H "current-user-role-id: (company_user_role_id)" \
+    -H "true-user-role-id: 1"
 ```
 
 ### HTTP Request
